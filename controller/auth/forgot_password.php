@@ -6,22 +6,23 @@ include '../../includes/DatabaseFunction.php';
 
 $message = '';
 
+// Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
     $user = getUserByEmail($pdo, $email);
 
+    // If user exists, create reset token and display reset link
     if ($user) {
-        // Tạo token
+        // Generate a secure token
         $token = bin2hex(random_bytes(32));
         
-        // $expires = date('Y-m-d H:i:s', strtotime('+1 hour')); // <-- XÓA DÒNG NÀY
-        
-        // Lưu token vào CSDL (gọi hàm đã được đơn giản hóa)
-        setResetToken($pdo, $email, $token); // <-- ĐÃ SỬA
+        // Store the token in the database
+        setResetToken($pdo, $email, $token);
 
-        // Mô phỏng việc gửi email
+        // Create reset link (in a real app, this would be emailed)
         $resetLink = "http://localhost/Coursework/controller/auth/reset_password.php?token=" . $token;
         
+        // Display success message with reset link
         $message_type = 'success';
         $message = "Found account. In a real app, an email would be sent.<br>"
                  . "For this project, please use this link: <br>"
@@ -37,5 +38,5 @@ $title = 'Forgot Password';
 ob_start();
 include '../../templates/auth/forgot_password.html.php';
 $output = ob_get_clean();
-include '../../templates/auth/layout_fake.html.php'; // Dùng layout user
+include '../../templates/auth/layout_fake.html.php'; 
 ?>

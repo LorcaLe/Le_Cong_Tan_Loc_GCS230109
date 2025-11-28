@@ -1,13 +1,14 @@
 <?php
-include '../../includes/auth.php'; // Thêm vào
-session_start_if_not_started(); // Thêm vào
-checkAuth(); // Thêm vào
-if (!isAdmin()) die('Access Denied'); // Thêm vào
+include '../../includes/auth.php'; 
+session_start_if_not_started(); 
+checkAuth();
+if (!isAdmin()) die('Access Denied'); 
 
 include '../../includes/DatabaseConnection.php';
-include '../../includes/DatabaseFunction.php'; // Thêm vào
+include '../../includes/DatabaseFunction.php'; 
 
-$messages = getAllContactMessages($pdo); // Dùng hàm mới
+// Fetch all contact messages
+$messages = getAllContactMessages($pdo); 
 $title = "Contact Inbox";
 
 ob_start();

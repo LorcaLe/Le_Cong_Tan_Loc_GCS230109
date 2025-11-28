@@ -7,8 +7,8 @@ $error = $_GET['error'] ?? null;
 <head>
     <meta charset="UTF-8">
     <title>Register</title>
-    <?php include 'bootstrap.php'; ?>
-    <link rel="stylesheet" href="login_register.css">
+    <?php include '../UI/bootstrap.php'; ?>
+    <link rel="stylesheet" href="../UI/login_register.css">
 </head>
 
 <body class="d-flex justify-content-center align-items-center vh-100">
@@ -34,7 +34,7 @@ $error = $_GET['error'] ?? null;
         <div class="alert alert-danger">❌ Email already exists.</div>
     <?php endif; ?>
 
-    <form action="register.php" method="POST">
+    <form action="../../controller/auth/register.php" method="POST">
 
         <div class="mb-3">
             <label class="form-label">Full Name</label>
@@ -56,7 +56,7 @@ $error = $_GET['error'] ?? null;
     </form>
 
     <p class="text-small">
-        Already have an account? <a href="login.php">Login</a>
+        Already have an account? <a href="../../controller/auth/login.php">Login</a>
     </p>
 
 </div>

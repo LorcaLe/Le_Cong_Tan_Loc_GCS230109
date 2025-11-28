@@ -1,13 +1,15 @@
 <?php
-include '../../includes/auth.php'; // Thêm vào
-session_start_if_not_started(); // Thêm vào
-checkAuth(); // Thêm vào
+include '../../includes/auth.php'; 
+session_start_if_not_started(); 
+checkAuth(); 
 
 require_once '../../includes/DatabaseConnection.php';
-require_once '../../includes/DatabaseFunction.php'; // Thêm vào
+require_once '../../includes/DatabaseFunction.php'; 
 $title = 'Contact Us';
+
+// Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Dùng hàm mới
+
     insertContactMessage(
         $pdo,
         $_SESSION['user']['id'],

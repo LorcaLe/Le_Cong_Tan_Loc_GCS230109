@@ -3,7 +3,7 @@
         <div class="card">
             <div class="card-body">
                 <p>Enter your email address and we will (simulate) send you a link to reset your password.</p>
-                
+                 
                 <?php if (!empty($message)): ?>
                     <div class="alert alert-<?= $message_type ?>">
                         <?= $message ?>

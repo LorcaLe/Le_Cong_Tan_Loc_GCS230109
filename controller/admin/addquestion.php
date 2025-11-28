@@ -1,5 +1,4 @@
 <?php
-// THÊM BẢO VỆ ADMIN
 include '../../includes/auth.php';
 session_start_if_not_started();
 checkAuth();
@@ -10,16 +9,17 @@ if (!isAdmin()) {
 include '../../includes/DatabaseConnection.php';
 include '../../includes/DatabaseFunction.php';
 
+// Handle form submission
 if (isset($_POST['text'])) {
     try {
         $imageFileName = null;
-
+        // Handle image upload
         if (!empty($_FILES['image']['name'])) {
-            $uploadDir = __DIR__ . '/../images/';
+            $uploadDir = __DIR__ . '../../../images/';
             if (!is_dir($uploadDir)) {
                 mkdir($uploadDir, 0777, true);
             }
-
+            // Upload new image
             $imageFileName = time() . '_' . basename($_FILES['image']['name']);
             $targetPath = $uploadDir . $imageFileName;
 
@@ -29,19 +29,17 @@ if (isset($_POST['text'])) {
             }
         }
         
-        // === SỬA LỖI Ở ĐÂY ===
-        // Bỏ $_POST['userid'] và thay bằng ID của admin
         $adminUserId = $_SESSION['user']['id'];
         
         insertQuestion(
             $pdo, 
             $_POST['text'], 
             $_POST['moduleid'], 
-            $adminUserId,  // Đã sửa
+            $adminUserId,  
             $imageFileName
         );
 
-        header('location: questions.php'); // Chuyển hướng về trang list của admin
+        header('location: questions.php');
         exit;
     } catch (PDOException $e) {
         $title = 'An error has occurred';
@@ -50,7 +48,6 @@ if (isset($_POST['text'])) {
 } else {
     $title = 'Add a new Question';
     $modules = allModules($pdo);
-    // $users = allUsers($pdo); // XÓA DÒNG NÀY, không cần nữa
     
     ob_start();
     include '../../templates/admin/admin_addquestion.html.php';

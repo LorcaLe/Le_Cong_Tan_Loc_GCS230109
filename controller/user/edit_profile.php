@@ -1,31 +1,30 @@
 <?php
 include '../../includes/auth.php';
 session_start_if_not_started();
-checkAuth(); // User phải đăng nhập
+checkAuth(); 
 
 include '../../includes/DatabaseConnection.php';
 include '../../includes/DatabaseFunction.php';
 
-$message = '';
+$message = '';  // To hold success message
 
 if (isset($_POST['name'])) {
     $id = $_SESSION['user']['id'];
     $name = $_POST['name'];
     $email = $_POST['email'];
     
-    // Nếu user nhập pass mới thì hash, không thì để null
-    $password = !empty($_POST['password']) ? password_hash($_POST['password'], PASSWORD_DEFAULT) : null;
+    // Only hash and update password if a new one is provided
+    $password = !empty($_POST['password']) ? password_hash($_POST['password'], PASSWORD_DEFAULT) : null;    
 
     updateUserProfile($pdo, $id, $name, $email, $password);
     
-    // Cập nhật lại session để hiển thị tên mới ngay lập tức
+
     $_SESSION['user']['name'] = $name;
     $_SESSION['user']['email'] = $email;
     
     $message = "Profile updated successfully!";
     $user = getUser($pdo, $id); 
 } else {
-    // Lấy thông tin hiện tại của user
     $user = getUser($pdo, $_SESSION['user']['id']);
 }
 

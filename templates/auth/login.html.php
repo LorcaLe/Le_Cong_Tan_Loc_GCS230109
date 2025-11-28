@@ -18,7 +18,7 @@ $error = $_GET['error'] ?? null;
 
     <h3 class="text-center mb-3">Login</h3>
 
-    <!-- Hiển thị thông báo lỗi -->
+
     <?php if ($error === "empty"): ?>
         <div class="alert alert-danger text-center">❌ Please enter complete information.</div>
     <?php endif; ?>
@@ -47,7 +47,7 @@ $error = $_GET['error'] ?? null;
     </form>
 
     <p class="text-small text-muted text-center mt-3">
-        Don't have an account? <a href="../../controller/auth/register.html.php">Register here</a>
+        Don't have an account? <a href="../../controller/auth/register.php">Register here</a>
         <br>
         <a href="../../controller/auth/forgot_password.php">Forgot your password?</a> 
     </p>

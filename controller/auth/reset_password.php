@@ -4,30 +4,31 @@ session_start_if_not_started();
 include '../../includes/DatabaseConnection.php';
 include '../../includes/DatabaseFunction.php';
 
+// Get token from URL
 $token = $_GET['token'] ?? null;
 if (empty($token)) {
     die('Invalid token.');
 }
 
-// Lấy user bằng token
+// Fetch user by token
 $user = getUserByToken($pdo, $token);
 
+// If no user found, token is invalid or expired
 if (!$user) {
     die('Token is invalid or has expired.');
 }
 
-// Xử lý khi user gửi form pass mới
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'];
     $password_confirm = $_POST['password_confirm'];
-
+    
+    // Basic validation
     if ($password !== $password_confirm) {
         $error = "Passwords do not match.";
     } else {
-        // Hash pass mới
+
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         
-        // Cập nhật CSDL
         updatePassword($pdo, $user['id'], $hashedPassword);
         
         $success = "Password updated successfully! You can now <a href='login.php'>log in</a>.";

@@ -1,20 +1,22 @@
 <?php
-include '../../includes/auth.php'; // Thêm vào
-session_start_if_not_started(); // Thêm vào
-checkAuth(); // Thêm vào
-if (!isAdmin()) die('Access Denied'); // Thêm vào
+include '../../includes/auth.php'; 
+session_start_if_not_started(); 
+checkAuth(); 
+if (!isAdmin()) die('Access Denied');
 
 include '../../includes/DatabaseConnection.php';
-include '../../includes/DatabaseFunction.php'; // Thêm vào
+include '../../includes/DatabaseFunction.php'; 
 
+// Validate and get message ID
 if (!isset($_GET['id'])) {
     header('Location: inbox.php');
     exit;
 }
 $id = $_GET['id'];
 
-$msg = getContactMessageById($pdo, $id); // Dùng hàm mới
-markMessageAsRead($pdo, $id); // Dùng hàm mới
+// Fetch message details
+$msg = getContactMessageById($pdo, $id); 
+markMessageAsRead($pdo, $id); 
 
 $title = "View Message";
 ob_start();

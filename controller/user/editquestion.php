@@ -1,30 +1,29 @@
 <?php
 include '../../includes/auth.php';
 session_start_if_not_started();
-checkAuth(); // Bắt buộc user đăng nhập
+checkAuth();
 
 include '../../includes/DatabaseConnection.php';
 include '../../includes/DatabaseFunction.php';
 
 try {
-    // PHẦN 1: XỬ LÝ FORM KHI USER ẤN "SAVE" (POST Request)
+
     if (isset($_POST['submit'])) {
         
         $questionId = $_POST['questionid'];
         $text = $_POST['text'];
         $moduleId = $_POST['moduleid'];
-        
-        // --- KIỂM TRA QUYỀN SỞ HỮU ---
-        $question = getQuestion($pdo, $questionId);
-        if ($question['userid'] != $_SESSION['user']['id'] && !isAdmin()) {
-            die('Access Denied.');
+
+        $question = getQuestion($pdo, $questionId); 
+        if ($question['userid'] != $_SESSION['user']['id'] && !isAdmin()) {     // Check if user owns the question or is admin
+            die('Access Denied.'); // Unauthorized access
         }
 
-        $imageFileName = null; // Mặc định là không có ảnh mới
+        $imageFileName = null; 
 
-        // --- XỬ LÝ UPLOAD ẢNH MỚI (NẾU CÓ) ---
+
         if (!empty($_FILES['image']['name'])) {
-            // 1. Xóa ảnh cũ (nếu có)
+            // Remove old image if exists
             if (!empty($question['img'])) {
                 $oldImagePath = __DIR__ . '../../../images/' . $question['img'];
                 if (file_exists($oldImagePath)) {
@@ -32,50 +31,50 @@ try {
                 }
             }
 
-            // 2. Tải ảnh mới lên
+            // Upload new image
             $uploadDir = __DIR__ . '../../../images/';
             if (!is_dir($uploadDir)) mkdir($uploadDir, 0777, true);
             
             $imageFileName = time() . '_' . basename($_FILES['image']['name']);
             $targetPath = $uploadDir . $imageFileName;
-
+        
             if (!move_uploaded_file($_FILES['image']['tmp_name'], $targetPath)) {
-                $imageFileName = null; // Upload thất bại
+                $imageFileName = null; 
             }
         }
         
-        // Dùng hàm update MỚI
+
         updateQuestionDetails($pdo, $questionId, $text, $moduleId, $imageFileName);
         
         header('location: questions.php');
         exit;
     }
     
-    // PHẦN 2: HIỂN THỊ FORM (GET Request)
+
     else {
         if (!isset($_GET['id'])) {
              header('location: questions.php');
              exit;
         }
-        
+
         $question = getQuestion($pdo, $_GET['id']);
         if ($question['userid'] != $_SESSION['user']['id'] && !isAdmin()) {
             die('Access Denied.');
         }
         
-        // Lấy danh sách module để hiển thị dropdown
+
         $modules = allModules($pdo);
         
         $title = 'Edit Your Question';
         ob_start();
-        include '../../templates/user/editquestion.html.php'; // Dùng template đã được nâng cấp
+        include '../../templates/user/editquestion.html.php'; 
         $output = ob_get_clean();
     }
     
 } catch(PDOException $e) {
     $title = 'An error has occurred';
-    $output = 'Database error: ' . $e->getMessage();
+    $output = 'Database error: ' . $e->getMessage();    // Display error message
 }
 
-include '../../templates/user/layout.html.php'; // Dùng layout user
+include '../../templates/user/layout.html.php';
 ?>

@@ -10,11 +10,11 @@ include '../../includes/DatabaseConnection.php';
 include '../../includes/DatabaseFunction.php';
 
 try {
-    // Logic Xóa User
+    // Handle user deletion
     if (isset($_POST['action']) && $_POST['action'] === 'delete') {
         $userIdToDelete = $_POST['user_id'];
         
-        // Cấm admin tự xóa mình
+        // Prevent admin from deleting their own account
         if ($userIdToDelete == $_SESSION['user']['id']) {
             header('Location: manage_users.php?error=selfdelete');
             exit;
@@ -25,8 +25,7 @@ try {
         exit;
     }
 
-    // Lấy danh sách user
-    $users = getAllUsers($pdo); // Dùng hàm mới
+    $users = getAllUsers($pdo); 
     $title = 'Manage Users';
     
     ob_start();

@@ -10,6 +10,11 @@
                 
                 <?php if (isset($success)): ?>
                     <div class="alert alert-success"><?= $success ?></div>
+                        <script>
+                            setTimeout(() => {
+                                window.location.href = "../../templates/auth/login.html.php";
+                            }, 2000);
+                        </script>
                 <?php else: ?>
                     <form action="reset_password.php?token=<?= htmlspecialchars($token) ?>" method="POST">
                         <div class="mb-3">
