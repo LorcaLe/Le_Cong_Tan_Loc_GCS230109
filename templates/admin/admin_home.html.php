@@ -35,7 +35,7 @@
         <div class="card h-100 shadow-sm border-0 border-top border-4 border-warning">
             <div class="card-body text-center">
                 <h5 class="card-title text-warning fw-bold">Users</h5>
-                <p class="card-text text-muted">View user list and remove accounts.</p>
+                <p class="card-text text-muted">View user list and remove accounts.</p><br />
                 <a href="manage_users.php" class="btn btn-outline-warning w-100 stretched-link">Manage Users</a>
             </div>
         </div>
@@ -45,7 +45,7 @@
         <div class="card h-100 shadow-sm border-0 border-top border-4 border-info">
             <div class="card-body text-center">
                 <h5 class="card-title text-info fw-bold">Inbox</h5>
-                <p class="card-text text-muted">Read and reply to contact messages.</p>
+                <p class="card-text text-muted">Read and reply to contact messages.</p><br />
                 <a href="inbox.php" class="btn btn-outline-info w-100 stretched-link">View Inbox</a>
             </div>
         </div>
