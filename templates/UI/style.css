@@ -1,21 +1,20 @@
-/* Biến màu chủ đạo (Bạn có thể đổi màu này) */
 :root {
-    --primary-color: #005a9c; /* Màu xanh Greenwich */
-    --admin-color: #343a40; /* Màu đen/xám cho admin */
+    --primary-color: #005a9c; 
+    --admin-color: #343a40; 
 }
 
 body {
-    background-color: #f8f9fa; /* Màu nền xám rất nhạt */
+    background-color: #f8f9fa; 
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
 main {
-    flex: 1; /* Đẩy footer xuống dưới */
+    flex: 1; 
 }
 
-/* Tùy chỉnh Header (Logo) */
+
 .site-header {
     background-color: var(--primary-color);
     color: white;
@@ -31,7 +30,7 @@ main {
     text-decoration: none;
 }
 
-/* Tùy chỉnh Header Admin */
+
 .admin-header {
     background-color: var(--admin-color);
     color: white;
@@ -47,7 +46,7 @@ main {
 }
 
 
-/* Tùy chỉnh Card (thay cho blockquote) */
+
 .question-card {
     border: 0;
     box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
@@ -59,7 +58,7 @@ main {
     color: #6c757d;
 }
 
-/* Footer */
+
 footer.site-footer {
     background-color: #e9ecef;
     color: #495057;
